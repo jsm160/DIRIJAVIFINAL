@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react'
 import Home from '../pages/Home'
 import { Provider } from 'react-redux'
 import { MemoryRouter } from 'react-router-dom'
-import { store } from "c:/Users/javis/Desktop/MASTER/DIRI/DIRIFINAL/basketball-manager/src/store/index"
+import { store } from "../store"
 import { I18nextProvider } from 'react-i18next'
 import i18n from '../i18n'
 

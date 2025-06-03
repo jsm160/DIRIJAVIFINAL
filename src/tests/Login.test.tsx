@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import Login from '../pages/Login'
 import { Provider } from 'react-redux'
-import { store } from "c:/Users/javis/Desktop/MASTER/DIRI/DIRIFINAL/basketball-manager/src/store/index"
+import { store } from "../store"
 import { MemoryRouter } from 'react-router-dom'
 import { I18nextProvider } from 'react-i18next'
 import i18n from '../i18n'
