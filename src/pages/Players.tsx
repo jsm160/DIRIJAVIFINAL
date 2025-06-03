@@ -59,8 +59,14 @@ export default function Players() {
   }, [dispatch])
 
   const handleDelete = async (id: string) => {
-    await deletePlayerFromFirestore(id)
-    dispatch(deletePlayer(id))
+    const confirmed = window.confirm(t('confirmDelete') || '¿Estás seguro de que quieres eliminar este elemento?')
+    if (!confirmed) return
+    try{
+      await deletePlayerFromFirestore(id)
+      dispatch(deletePlayer(id))
+    }catch (error) {
+      console.error('Error deleting:', error)
+    }
   }
 
   const handleUpdate = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -175,6 +181,9 @@ export default function Players() {
           </DialogActions>
         </form>
       </Dialog>
+      <Button variant="outlined" onClick={() => navigate('/')} sx={{ mt: 2 }}>
+  ⬅️     {t('backToHome') || 'Volver a inicio'}
+      </Button>
     </Container>
   )
 }

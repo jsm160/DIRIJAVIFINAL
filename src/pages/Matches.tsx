@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { setMatches, deleteMatch, updateMatch } from '../store/matchSlice'
+import { deleteMatch, setMatches, updateMatch } from '../store/matchSlice'
 import { collection, onSnapshot, query, where } from 'firebase/firestore'
 import { db } from '../firebase'
 import { getAuth } from 'firebase/auth'
@@ -14,6 +14,7 @@ import {
   Dialog, DialogTitle, DialogContent, DialogActions, TextField,
   FormControl, InputLabel, Select, MenuItem
 } from '@mui/material'
+import { deleteMatchFromFirestore, updateMatchInFirestore } from '../services/matchService'
 
 export default function Matches() {
   const { t } = useTranslation()
@@ -42,11 +43,20 @@ export default function Matches() {
     return () => unsubscribe()
   }, [dispatch])
 
-  const handleDelete = (id: string) => {
-    dispatch(deleteMatch(id))
+  const handleDelete = async (id: string) => {
+      const confirmed = window.confirm(t('confirmDelete') || '¿Estás seguro de que quieres eliminar este elemento?')
+      if (!confirmed) return
+      try{
+        await deleteMatchFromFirestore(id)
+        dispatch(deleteMatch(id))
+      }catch (error) {
+        console.error('Error deleting:', error)
+      }
   }
+  
 
-  const handleUpdate = (e: React.FormEvent<HTMLFormElement>) => {
+
+  const handleUpdate = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (!editingMatch) return
 
@@ -68,20 +78,25 @@ export default function Matches() {
       return
     }
 
-    const updated: Match = {
-      ...editingMatch,
-      rival,
-      date,
-      isHome,
-      result: isHome
-        ? `${pointsFor} - ${pointsAgainst}`
-        : `${pointsAgainst} - ${pointsFor}`,
-      stats: { pointsFor, pointsAgainst }
-    }
+    try {
+      const updated: Match = {
+        ...editingMatch,
+        rival,
+        date,
+        isHome,
+        result: isHome
+          ? `${pointsFor} - ${pointsAgainst}`
+          : `${pointsAgainst} - ${pointsFor}`,
+        stats: { pointsFor, pointsAgainst }
+      }
 
-    dispatch(updateMatch(updated))
-    setEditingMatch(null)
-    setFormErrors({})
+      await updateMatchInFirestore(updated)
+      dispatch(updateMatch(updated))
+      setEditingMatch(null)
+      setFormErrors({})
+    } catch (error) {
+      console.error('Error updating match:', error)
+    }
   }
 
   return (
@@ -172,6 +187,11 @@ export default function Matches() {
           </DialogActions>
         </form>
       </Dialog>
+      <Button variant="outlined" onClick={() => navigate('/')} sx={{ mt: 2 }}>
+  ⬅️     {t('backToHome') || 'Volver a inicio'}
+      </Button>
+
     </Container>
+    
   )
 }

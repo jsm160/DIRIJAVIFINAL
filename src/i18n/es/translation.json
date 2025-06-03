@@ -52,6 +52,12 @@
   "defeats": "Derrotas",
   "avgPointsFor": "Media de puntos a favor",
   "avgPointsAgainst": "Media de puntos en contra",
-  "loginError": "Credenciales incorrectas"
+  "PointsFor": "Puntos a favor",
+  "PointsAgainst": "Puntos en contra",
+  "loginError": "Credenciales incorrectas",
+  "confirmDelete": "¿Estas seguro de que quieres borrarlo?",
+  "notLoggedIn": "No estas logueado",
+  "requiredField": "El campo es obligatorio",
+  "backToHome": "Volver a inicio"
 
 }
