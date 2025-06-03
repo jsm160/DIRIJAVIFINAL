@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import { Component } from 'react'
 import type { ErrorInfo, ReactNode } from 'react'
 import logger from './utils/logger'
 
@@ -24,7 +24,7 @@ static getDerivedStateFromError(): State {
 
 
   componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    logger.error(`Error capturado por ErrorBoundary: ${error.message}`)
+    logger.info(`Error capturado por ErrorBoundary: ${error.message}`)
     logger.debug(`Detalles: ${errorInfo.componentStack}`)
   }
 
