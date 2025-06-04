@@ -18,5 +18,10 @@ Aplicación web para la gestión de equipos de baloncesto. Permite registrar jug
 
 1. Clona el repositorio:
    ```bash
-   git clone https://github.com/tuusuario/basketball-manager.git
+   git clone https://github.com/tuusuario/basketball-manager.git](https://github.com/jsm160/DIRIJAVIFINAL.git
    cd basketball-manager
+   ```
+2. Credenciales para iniciar sesion
+3. ```bash
+   usuario: user1@user.com
+   contraseña: 123456
